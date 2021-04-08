@@ -21,7 +21,7 @@
   }
 
   .hero {
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,6 +35,17 @@
   </style>
 
 <script>
+  const shadowLength = 30;
+  const area = document.querySelector('.hero');
+  const text = document.querySelector('.hero>h1')
+
+  area.addEventListener('mousemove', handleshadow);
+
+  function handleshadow(e) {
+    let x = (shadowLength * ((e.layerX) - (area.offsetWidth / 2))) / area.offsetWidth;
+    let y = (shadowLength * ((e.layerY) - (area.offsetHeight / 2))) / area.offsetHeight;
+    text.style.textShadow = `${x}px ${y}px 0 gray`;
+  }
 </script>
 </body>
 </html>

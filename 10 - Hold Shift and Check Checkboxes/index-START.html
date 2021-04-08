@@ -96,6 +96,27 @@
   </div>
 
 <script>
+  const checkBoxes = document.querySelectorAll('input[type="checkbox"]');
+  let lastCheck = null;
+  for (const checkBox of checkBoxes) {
+    checkBox.addEventListener('click', allCheck);
+  }
+
+function allCheck(e) {
+  let isIn = false;
+  if(e.shiftKey && this.checked) {
+    for (const checkBox of checkBoxes) {
+      if(checkBox === this || checkBox === lastCheck) {
+        isIn = !isIn;
+      }
+      if(isIn) {
+        checkBox.checked = true;
+      }
+    }
+  }
+  lastCheck = this;
+}
+
 </script>
 </body>
 </html>

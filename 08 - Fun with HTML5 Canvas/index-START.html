@@ -1,19 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>HTML5 Canvas</title>
 </head>
-<body>
-<canvas id="draw" width="800" height="800"></canvas>
-<script>
-</script>
 
-<style>
-  html, body {
-    margin: 0;
-  }
-</style>
+<body>
+  <canvas id="draw" width="800" height="800"></canvas>
+  <script>
+    canvas = document.getElementById('draw');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    ctx = canvas.getContext('2d');
+    ctx.strokeStyle = '#BADA55';
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.lineWidth = 1;
+
+    let isDrawing = false;
+    let x = 0;
+    let y = 0;
+    let hue = 0;
+    let dir = 1;
+
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mousedown', (e) => {
+      [x, y] = [e.offsetX, e.offsetY];
+      isDrawing = true;
+    });
+    canvas.addEventListener('mouseup', () => isDrawing = false);
+    canvas.addEventListener('mouseout', () => isDrawing = false);
+    function draw(e) {
+      if(isDrawing == false) return;
+      ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+      [x, y] = [e.offsetX, e.offsetY];
+      if (hue > 360) {
+        hue = 0;
+      }
+      else {
+        hue++;
+      }
+      ctx.lineWidth += dir;
+      if (ctx.lineWidth == 100) {dir = -1;} 
+      if (ctx.lineWidth == 1) {dir = 1;}
+    }
+
+  </script>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+    }
+  </style>
 
 </body>
+
 </html>
